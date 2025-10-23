@@ -55,7 +55,7 @@ _(To be updated as the project develops)_
 
 ```bash
 # Example prerequisites
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 - Git
 ```
