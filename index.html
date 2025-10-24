@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MzanziGrid ZA - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-switcher">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <span class="theme-icon">🌙</span>
+            <span class="theme-text">Dark</span>
+        </button>
+        <div class="theme-options">
+            <button class="theme-option" data-theme="dark">Dark</button>
+            <button class="theme-option" data-theme="light">Light</button>
+            <button class="theme-option" data-theme="system">System</button>
+        </div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Login</h1>
+                <p class="login-subtitle">If You Are Already A Member, Easily Log in</p>
+            </div>
+            
+            <!-- User Type Selection -->
+            <div class="user-type-selector">
+                <div class="user-type-option active" data-type="resident">
+                    <div class="user-type-icon">🏡</div>
+                    <div class="user-type-info">
+                        <h3>City Resident</h3>
+                        <p>Report and track outages</p>
+                    </div>
+                </div>
+                <div class="user-type-option" data-type="worker">
+                    <div class="user-type-icon">👷</div>
+                    <div class="user-type-info">
+                        <h3>Municipality Worker</h3>
+                        <p>Access verified updates</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button type="button" class="google-login-btn">
+                    <span class="google-icon">🔍</span>
+                    Login with Google
+                </button>
+                
+                <div class="form-options">
+                    <a href="#" class="forgot-password">Forgot my password</a>
+                </div>
+            </form>
+            
+            <div class="register-prompt">
+                <p>If You Don't Have An Account. <a href="register.html">Create</a></p>
+            </div>
+        </div>
+        
+        <div class="platform-info">
+            <div class="platform-logo">
+                <h2>MzanziGrid ZA</h2>
+            </div>
+            <h3>Community-Powered Electricity Monitoring</h3>
+            <p>Track and report unplanned electricity disruptions across South Africa in real-time.</p>
+            <div class="features">
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Real-time outage tracking</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <span>Instant community alerts</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🗺️</span>
+                    <span>Live outage maps</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🛡️</span>
+                    <span>Infrastructure protection</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme switching functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const themeIcon = document.querySelector('.theme-icon');
+        const themeText = document.querySelector('.theme-text');
+
+        function setInitialTheme() {
+            const savedTheme = localStorage.getItem('mzanzigrid-theme') || 'system';
+            applyTheme(savedTheme);
+            updateToggleButton(savedTheme);
+        }
+
+        function applyTheme(theme) {
+            let effectiveTheme = theme;
+            
+            if (theme === 'system') {
+                effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            
+            document.body.setAttribute('data-theme', effectiveTheme);
+            document.documentElement.setAttribute('data-theme', effectiveTheme);
+            localStorage.setItem('mzanzigrid-theme', theme);
+            
+            themeOptions.forEach(option => {
+                option.classList.toggle('active', option.dataset.theme === theme);
+            });
+        }
+
+        function updateToggleButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '';
+                themeText.textContent = 'Dark';
+            } else if (theme === 'light') {
+                themeIcon.textContent = '';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '';
+                themeText.textContent = 'System';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.querySelector('.theme-options').classList.toggle('show');
+        });
+
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const selectedTheme = option.dataset.theme;
+                applyTheme(selectedTheme);
+                updateToggleButton(selectedTheme);
+                document.querySelector('.theme-options').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!themeToggle.contains(e.target) && !document.querySelector('.theme-options').contains(e.target)) {
+                document.querySelector('.theme-options').classList.remove('show');
+            }
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const savedTheme = localStorage.getItem('mzanzigrid-theme') || 'system';
+            if (savedTheme === 'system') {
+                applyTheme('system');
+            }
+        });
+
+        // User Type Selection
+        document.querySelectorAll('.user-type-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.user-type-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Update form context based on user type
+                const userType = this.dataset.type;
+                updateFormContext(userType);
+            });
+        });
+
+        function updateFormContext(userType) {
+            const emailInput = document.getElementById('email');
+            const loginBtn = document.querySelector('.login-btn');
+            
+            if (userType === 'worker') {
+                emailInput.placeholder = "Enter your work email address";
+                loginBtn.textContent = "Login as Municipality Worker";
+            } else {
+                emailInput.placeholder = "Enter your email address";
+                loginBtn.textContent = "Login as Resident";
+            }
+        }
+
+        // Form submission
+        document.querySelector('.login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const userType = document.querySelector('.user-type-option.active').dataset.type;
+            alert(`Login attempt for ${email} as ${userType} - This would connect to backend in production`);
+        });
+
+        // Google login handler
+        document.querySelector('.google-login-btn').addEventListener('click', function() {
+            const userType = document.querySelector('.user-type-option.active').dataset.type;
+            alert(`Google authentication for ${userType} would be implemented here`);
+        });
+
+        // Initialize
+        setInitialTheme();
+    </script>
+</body>
+</html>

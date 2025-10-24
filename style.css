@@ -1,0 +1,701 @@
+:root {
+    /* Light theme variables */
+    --primary-light: #10b981;
+    --primary-dark-light: #059669;
+    --primary-light-light: #34d399;
+    --accent-light: #3b82f6;
+    --text-light: #1e293b;
+    --text-light-light: #475569;
+    --text-muted-light: #64748b;
+    --background-light: #f8fafc;
+    --card-bg-light: #ffffff;
+    --card-bg-light-light: #f1f5f9;
+    --border-light: #e2e8f0;
+    --border-light-light: #cbd5e1;
+    --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    /* Dark theme variables */
+    --primary-dark: #10b981;
+    --primary-dark-dark: #059669;
+    --primary-light-dark: #34d399;
+    --accent-dark: #3b82f6;
+    --text-dark: #f8fafc;
+    --text-light-dark: #cbd5e1;
+    --text-muted-dark: #94a3b8;
+    --background-dark: #0f172a;
+    --card-bg-dark: #1e293b;
+    --card-bg-light-dark: #334155;
+    --border-dark: #475569;
+    --border-light-dark: #64748b;
+    --shadow-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Default light theme */
+:root {
+    --primary: var(--primary-light);
+    --primary-dark: var(--primary-dark-light);
+    --primary-light: var(--primary-light-light);
+    --accent: var(--accent-light);
+    --text: var(--text-light);
+    --text-light: var(--text-light-light);
+    --text-muted: var(--text-muted-light);
+    --background: var(--background-light);
+    --card-bg: var(--card-bg-light);
+    --card-bg-light: var(--card-bg-light-light);
+    --border: var(--border-light);
+    --border-light: var(--border-light-light);
+    --shadow: var(--shadow-light);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    --primary: var(--primary-dark);
+    --primary-dark: var(--primary-dark-dark);
+    --primary-light: var(--primary-light-dark);
+    --accent: var(--accent-dark);
+    --text: var(--text-dark);
+    --text-light: var(--text-light-dark);
+    --text-muted: var(--text-muted-dark);
+    --background: var(--background-dark);
+    --card-bg: var(--card-bg-dark);
+    --card-bg-light: var(--card-bg-light-dark);
+    --border: var(--border-dark);
+    --border-light: var(--border-light-dark);
+    --shadow: var(--shadow-dark);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+}
+
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-toggle {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--shadow);
+    min-width: 120px;
+}
+
+.theme-options.show {
+    display: flex;
+}
+
+.theme-option {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: var(--text);
+    text-align: left;
+    transition: background-color 0.2s;
+}
+
+.theme-option:hover {
+    background: var(--card-bg-light);
+}
+
+.theme-option.active {
+    background: var(--primary);
+    color: white;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+/* Login Card Styles */
+.login-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 40px;
+    width: 100%;
+    border: 1px solid var(--border);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h1 {
+    color: var(--primary);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.login-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+/* User Type Selection Styles */
+.user-type-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.user-type-option {
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--card-bg-light);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-type-option:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-type-option.active {
+    border-color: var(--primary);
+    background-color: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.user-type-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.user-type-info h3 {
+    color: var(--text);
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.user-type-info p {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Form Styles */
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: var(--card-bg);
+    color: var(--text);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+}
+
+.divider span {
+    background: var(--card-bg);
+    padding: 0 15px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Google Login */
+.google-login-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.google-login-btn:hover {
+    background: var(--card-bg-light);
+    transform: translateY(-1px);
+}
+
+.google-icon {
+    font-size: 1.2rem;
+}
+
+/* Form Options */
+.form-options {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.forgot-password {
+    color: var(--primary-light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* Register Prompt */
+.register-prompt {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.register-prompt p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.register-prompt a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.register-prompt a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Platform Info */
+.platform-info {
+    padding: 30px;
+}
+
+.platform-logo h2 {
+    color: var(--primary);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.platform-info h3 {
+    color: var(--text);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.platform-info p {
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.feature-icon {
+    font-size: 1.3rem;
+    width: 30px;
+    text-align: center;
+}
+
+/* Registration Form Styles */
+.registration-form {
+    display: none;
+}
+
+.registration-form.active {
+    display: block;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.location-preview {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.location-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+}
+
+.location-icon {
+    font-size: 1.2rem;
+}
+
+select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: var(--card-bg);
+    color: var(--text);
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.worker-notice {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.notice-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.notice-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.terms-agreement {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.terms-agreement label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.4;
+}
+
+.terms-agreement a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.terms-agreement a:hover {
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Account Type Selector (for register page) */
+.account-type-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.account-option {
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--card-bg-light);
+}
+
+.account-option:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.account-option.active {
+    border-color: var(--primary);
+    background-color: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.account-option .icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.account-option h3 {
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.account-option p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 968px) {
+    .login-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 500px;
+    }
+    
+    .platform-info {
+        text-align: center;
+        order: -1;
+    }
+    
+    .features {
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        padding: 30px 25px;
+    }
+    
+    .theme-switcher {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .login-header h1 {
+        font-size: 2rem;
+    }
+    
+    .platform-logo h2 {
+        font-size: 1.8rem;
+    }
+    
+    .platform-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .user-type-selector {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .user-type-option {
+        padding: 15px;
+    }
+    
+    .user-type-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .user-type-info h3 {
+        font-size: 0.9rem;
+    }
+    
+    .user-type-info p {
+        font-size: 0.8rem;
+    }
+    
+    .account-type-selector {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .worker-notice {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-type-selector {
+        gap: 10px;
+    }
+    
+    .user-type-option {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .login-card {
+        padding: 20px;
+    }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--card-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-light);
+}
